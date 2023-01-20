@@ -9,9 +9,15 @@ const EmployeesAddForm = ({addNewEmpoyee}) => {
 
     function sendData(e){
         e.preventDefault();
-        addNewEmpoyee({name, salary, id: uuid(), increase: false});
-        setName("");
-        setSalary("");
+        if(name && salary){
+            e.preventDefault();
+            addNewEmpoyee({name, salary, id: uuid(), increase: false});
+            setName("");
+            setSalary("");
+            console.log(Boolean(name))
+            console.log(Boolean(salary))
+
+        }
     }
     return (
         <div className="app-add-form">
@@ -32,6 +38,11 @@ const EmployeesAddForm = ({addNewEmpoyee}) => {
                 <button type="submit"
                         className="btn btn-outline-light"
                         onClick={sendData}
+                        onKeyDown={(e) => {
+                            if(e.key === "Enter"){
+                                sendData()
+                            }
+                        }}
                         >Добавить</button>
             </form>
         </div>

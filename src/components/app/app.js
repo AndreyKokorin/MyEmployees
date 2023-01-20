@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import AppInfo from '../app-info/app-info';
 import SearchPanel from '../search-panel/search-panel';
@@ -13,6 +13,19 @@ function App() {
   const [filterFunc, setFilterFunc] = useState("all");
   const [serchStr, setSerchStr] = useState("");
 
+    useEffect(() => {
+    let employeesStorage = JSON.parse(localStorage.getItem("employees"))
+
+    if(employeesStorage){
+      setEmployees(employeesStorage)
+    }
+
+  }, [])  
+
+  useEffect(() => {
+    localStorage.setItem("employees", JSON.stringify(employees))
+  }, [employees])
+
   function addNewEmpoyee(data){
     setEmployees([...employees, data]);
   }
@@ -20,6 +33,7 @@ function App() {
   function OndeleteEmployee(id){
     setEmployees(employees.filter(item => item.id !== id))
   }
+
 
   function onIncrease(id){
     const newEmployeesList = [...employees];
